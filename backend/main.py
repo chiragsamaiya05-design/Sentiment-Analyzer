@@ -7,10 +7,13 @@ from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
 from fastapi.responses import FileResponse
 from pydantic import BaseModel, Field
+from pathlib import Path
 from keras.models import load_model   #for loading keras model
 import numpy as np
 import pickle
 import re
+
+BASE_DIR = Path(__file__).resolve().parent
 
 app = FastAPI()
 
@@ -88,7 +91,11 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.mount('/static', StaticFiles(directory="static"), name="static")
+app.mount(
+    "/static",
+    StaticFiles(directory=BASE_DIR / "static"),
+    name="static"
+)
 
 
 @app.get('/', include_in_schema=False)
