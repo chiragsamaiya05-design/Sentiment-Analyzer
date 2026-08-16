@@ -107,7 +107,7 @@ def server_ui():
 def health_check():
     return HealthResponse(status="Server is running", model_loaded=bool(dl_model))
 
-
+@app.post("/predict", response_model=PredictionResponse)
 def predict_emotion(text_input:TextInput):
 
 
