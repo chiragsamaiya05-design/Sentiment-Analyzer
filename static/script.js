@@ -1,5 +1,7 @@
 (() => {
   "use strict";
+  
+  const API_URL = "https://sentiment-analyzer-2-hbfs.onrender.com"
 
   const EMOJI = {
     sadness: "😢",
@@ -34,7 +36,7 @@
   --------------------------------------------------------------- */
   async function checkHealth() {
     try {
-      const res = await fetch("/health");
+      const res = await fetch(`${API_URL}/health`);
       if (!res.ok) throw new Error("bad status");
       const data = await res.json();
 
@@ -90,7 +92,7 @@
     enterThinking();
 
     try {
-      const res = await fetch("/predict", {
+      const res = await fetch(`${API_URL}/predict`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ text }),
