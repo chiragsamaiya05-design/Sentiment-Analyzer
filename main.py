@@ -13,13 +13,13 @@ import numpy as np
 import pickle
 import re
 
+
+
+
 BASE_DIR = Path(__file__).resolve().parent
 
-app = FastAPI()
-
-model_path = "Artifacts/BiGRU_model.keras"
-
-tokenizer_path = "Artifacts/tokenizer.pkl"
+model_path = BASE_DIR / "Artifacts" / "BiGRU_model.keras"
+tokenizer_path = BASE_DIR / "Artifacts" / "tokenizer.pkl"
 
 max_sequence_length = 50
 
@@ -39,7 +39,7 @@ def preprocess_text(text:str)->str:
     text = text.lower()
     text = re.sub(r"'","",text)
     text = re.sub(r"[^a-z0-9\s]"," ",text)
-    text = text.sub(r"\s+"," ",text).strip()
+    text = re.sub(r"\s+"," ",text).strip()
     return text
 
 
@@ -100,7 +100,7 @@ app.mount(
 
 @app.get('/', include_in_schema=False)
 def server_ui():
-    return FileResponse('static/index.html')
+    return FileResponse(BASE_DIR / "static" / "index.html")
 
 
 @app.get('/health', response_model=HealthResponse)
